@@ -1,10 +1,13 @@
 
+# Peter Nauroth
+
 # ----------------------------------------------------------
 # -------------- Supplemantary Functions   ----------------
 # ----------------------------------------------------------
 
-
-EnsurePackage<-function(x)
+# Function shamelessly copied from Stanton (2012) to get and 
+# load packages not installed
+ensure.package<-function(x)
 {
   x <- as.character(x)
   if (!require(x,character.only=TRUE))
@@ -15,6 +18,8 @@ EnsurePackage<-function(x)
   }
 }
 
+# Function shamelessly copied from ??? to show p-values in 
+# "pairs"-function for spearman's rho
 panel.cor <- function(x, y, digits = 2, cex.cor, ...)
 {
   usr <- par("usr"); on.exit(par(usr))
@@ -33,7 +38,18 @@ panel.cor <- function(x, y, digits = 2, cex.cor, ...)
   text(0.5, 0.4, txt2)
 }
 
+# Count appearance of a certain value in vector x
+count <- function (x, value) ifelse(is.na(value), 
+                                    length(which(is.na(x))), 
+                                    length(which(x==value)))
+
+# ----------------------------------------------------------
+# -------------- Supplemantary Wrappers   ----------------
+# ----------------------------------------------------------
+
+# Wrapper fpr performing a scaleanalysis with "psych"-packages
 scale.analysis <- function (df, sub) {
+  ensure.package("psych")
   sub.items <- c(names(sub))
   sub.scaleKey <- c(rep(1, length(sub.items)))
   sub.results <- scoreItems(keys = sub.scaleKey, items = df[sub.items])
@@ -41,7 +57,9 @@ scale.analysis <- function (df, sub) {
   return (sub.results)
 }
 
+# Wrapper fpr performing a scaleanalysis with "nfactors"-packages
 factor.analysis <- function (fact, factors) {
+  ensure.package("nfactors")
   fit <- factanal(fact, factors, rotation="varimax")
   print(fit, digits=2, cutoff=.3, sort=TRUE)
   ev <- eigen(cor(fact)) # get eigenvalues
@@ -51,15 +69,16 @@ factor.analysis <- function (fact, factors) {
   plotnScree(nS)
 }
 
+# 
 my.stat.desc <- function (x) {round(stat.desc(x), 2)}
 
-my.mean <- function (x) mean(x, na.rm = TRUE)
+# Wrapper for na.rm=T "mean"-function
+na.mean <- function (x) mean(x, na.rm = TRUE)
 
-count <- function (x, value) ifelse(is.na(value), length(which(is.na(x))), length(which(x==value)))
 
-
-############ RESTEHALDE
-# --> rel+ & rel*sci-(!) sagen meaning vorher
+# ----------------------------------------------------------
+# --------------    Not fully implemented   ----------------
+# ----------------------------------------------------------
 
 #plot cont. interaction:
 # {z1 <- z2 <- c(-1,1)
@@ -72,6 +91,3 @@ count <- function (x, value) ifelse(is.na(value), length(which(is.na(x))), lengt
 # 
 # mea.lm <- lm(mea ~ scale(rel) + epis, data=s0b)
 # summary(mea.lm)}
-
-
-
