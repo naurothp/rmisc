@@ -59,7 +59,7 @@ scale.analysis <- function (df, sub) {
 
 # Wrapper fpr performing a scaleanalysis with "nfactors"-packages
 factor.analysis <- function (fact, factors) {
-  ensure.package("nfactors")
+  ensure.package("nFactors")
   fit <- factanal(fact, factors, rotation="varimax")
   print(fit, digits=2, cutoff=.3, sort=TRUE)
   ev <- eigen(cor(fact)) # get eigenvalues
