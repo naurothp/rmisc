@@ -18,6 +18,16 @@ ensure.package<-function(x)
   }
 }
 
+# Function shamelessly copied from
+# http://www.cookbook-r.com/Manipulating_data/Comparing_vectors_or_factors_with_NA/
+compareNA <- function(v1,v2) {
+  # This function returns TRUE wherever elements are the same, including NA's,
+  # and false everywhere else.
+  same <- (v1 == v2)  |  (is.na(v1) & is.na(v2))
+  same[is.na(same)] <- FALSE
+  return(same)
+}
+
 # Function shamelessly copied from ??? to show p-values in 
 # "pairs"-function for spearman's rho
 panel.cor <- function(x, y, digits = 2, cex.cor, ...)
