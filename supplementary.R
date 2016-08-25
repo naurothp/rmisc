@@ -1,5 +1,9 @@
 
 # Peter Nauroth
+# to load the package:
+#require(RCurl)
+#script <- getURL("https://raw.githubusercontent.com/naurothp/rmisc/master/supplementary.R", ssl.verifypeer = FALSE)
+#eval(parse(text = script))
 
 # ----------------------------------------------------------
 # -------------- Supplemantary Functions   ----------------
