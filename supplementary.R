@@ -61,23 +61,23 @@ count <- function (x, value) ifelse(is.na(value),
 # -------------- Supplemantary Wrappers   ----------------
 # ----------------------------------------------------------
 
-# Wrapper fpr performing a scaleanalysis with "psych"-packages
+# Wrapper for performing a scaleanalysis with "psych"-packages
 scale.analysis <- function (df, sub) {
   ensure.package("psych")
   sub.items <- c(names(sub))
   sub.scaleKey <- c(rep(1, length(sub.items)))
-  sub.results <- scoreItems(keys = sub.scaleKey, items = df[sub.items])
+  sub.results <- score.items(keys = sub.scaleKey, items = df[sub.items])
   print(sub.results)
   return (sub.results)
 }
 
-# Wrapper fpr performing a scaleanalysis with "nfactors"-packages
+# Wrapper for performing a scaleanalysis with "nfactors"-packages
 factor.analysis <- function (fact, factors) {
   ensure.package("nFactors")
   fit <- factanal(fact, factors, rotation="varimax")
   print(fit, digits=2, cutoff=.3, sort=TRUE)
   ev <- eigen(cor(fact)) # get eigenvalues
-  ap <- parallel(subject=nrow(fact),var=ncol(fact),
+  ap <- nFactors::parallel(subject=nrow(fact),var=ncol(fact),
                  rep=100,cent=.05)
   nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
   plotnScree(nS)
