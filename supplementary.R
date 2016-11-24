@@ -62,16 +62,20 @@ count <- function (x, value) ifelse(is.na(value),
 # ----------------------------------------------------------
 
 # Wrapper for performing a scaleanalysis with "psych"-packages
-scale.analysis <- function (df, sub) {
+# df: dataframe
+# items: itemnames of scale (as to be found in dataframe)
+scale.analysis <- function (df, items) {
   ensure.package("psych")
-  sub.items <- c(names(sub))
+  sub.items <- items
   sub.scaleKey <- c(rep(1, length(sub.items)))
-  sub.results <- score.items(keys = sub.scaleKey, items = df[sub.items])
+  sub.results <- scoreItems(keys = sub.scaleKey, items = df[sub.items])
   print(sub.results)
   return (sub.results)
 }
 
 # Wrapper for performing a scaleanalysis with "nfactors"-packages
+# fact: object of only numeric values that can be coerced to a matrix
+# factors: no. of factors to be extracted
 factor.analysis <- function (fact, factors) {
   ensure.package("nFactors")
   fit <- factanal(fact, factors, rotation="varimax")
