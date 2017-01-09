@@ -93,6 +93,8 @@ my.stat.desc <- function (x) {round(stat.desc(x), 2)}
 # Wrapper for na.rm=T "mean"-function
 na.mean <- function (x) mean(x, na.rm = TRUE)
 
+# Wrapper for NOT %in% function
+'%!in%' <- function(x,y) !('%in%'(x,y))
 
 # ----------------------------------------------------------
 # --------------    Not fully implemented   ----------------
